@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 import pmvv.semsa.esus.producaoesus.model.AtendimentoProfissional;
 import pmvv.semsa.esus.producaoesus.model.Estabelecimento;
 
-public class Atendimentos implements Serializable {
+public class AtendimentosProfissional implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

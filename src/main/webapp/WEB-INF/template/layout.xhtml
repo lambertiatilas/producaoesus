@@ -17,38 +17,10 @@
 				<h:outputText value=""/>
 			</f:facet>
 		</p:ajaxStatus>
-		<h:form>
-    		<p:growl id="messages" showDetail="true" sticky="true" />
-		    <p:idleMonitor>
-		        <p:ajax event="idle" listener="#{idleMonitorView.onIdle}" update="messages" />
-		        <p:ajax event="active" listener="#{idleMonitorView.onActive}" update="messages" />
-		    </p:idleMonitor>
-		</h:form>
     	<header>
     		<h:link outcome="/home" title="Página inicial">
     			<h:graphicImage library="images" name="rh.png"/>
     		</h:link>
-    		<p:menubar>
-    			<p:submenu icon="fa fa-arrow-right" label="Atendimento" rendered="#{seguranca.atendentes}">
-	    			<p:menuitem icon="fa fa-user-md" value="Atender solicitação" outcome="/atendimento/pesquisa"/>
-	    		</p:submenu>
-	    		<p:submenu icon="fa fa-wechat" label="Solicitação" rendered="#{seguranca.atendentes or seguranca.solicitantes}">
-	    			<p:menuitem icon="fa fa-users" value="Solicitar profissional" outcome="/solicitacao/pesquisa"/>
-	    		</p:submenu>
-	    		<p:menuitem icon="fa fa-user-md" value="Profissional" outcome="/profissional/pesquisa" rendered="#{seguranca.atendentes}"/>
-	    		<p:submenu icon="fa fa-user-plus" label="Administração" rendered="#{seguranca.administradores}">
-	    			<p:menuitem icon="fa fa-user" value="Usuário" outcome="/usuario/pesquisa"/>
-		            <p:menuitem icon="fa fa-medkit" value="Cargo" outcome="/especialidade/pesquisa"/>
-		            <p:menuitem icon="fa fa-hospital-o" value="Estabelecimento" outcome="/estabelecimento/pesquisa"/>
-		        </p:submenu>
-		        <p:submenu icon="fa fa-bar-chart" label="Relatorios">
-	    			<p:menuitem icon="fa fa-users" value="Profissionais" outcome="/relatorio/lotacao"/>
-		        </p:submenu>
-		        <p:submenu icon="fa fa-user" label="#{seguranca.usuario.primeiroNome} (#{seguranca.usuario.localAcesso.descricao})">
-	    			<p:menuitem icon="fa fa-key" value="Redefinir senha" outcome="/perfil/cadastro-senha"/>
-	    			<p:menuitem icon="fa fa-sign-out" value="Sair" url="/rh/logout"/>
-		        </p:submenu>
-	    	</p:menubar>
     	</header>
     	<section>
    			<ui:insert name="corpo"/>
