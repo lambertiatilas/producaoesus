@@ -1,0 +1,87 @@
+<ui:composition template="/WEB-INF/template/layout.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <ui:define name="titulo">Relatório - Pesquisa de profissionais por estabelecimento</ui:define>
+    <ui:define name="corpo">
+    	<f:metadata>
+	   		<f:viewAction action="#{pesquisaLotacoesBean.inicializar}" />
+	   	</f:metadata>
+		<h:form>
+			<p:panel header="Relatório - Pesquisa de profissionais por estabelecimento" class="form-pesquisa">
+				<p:growl sticky="true"/>
+				<p:panelGrid columns="6" layout="grid" columnClasses="rotulo, campo, rotulo, campo, rotulo, campo">
+					<p:outputLabel value="Matrícula:" for="matricula"/>
+		    		<p:inputMask id="matricula" value="#{pesquisaLotacoesBean.filtro.matricula}" mask="9999?9999" size="7"/>
+					<p:outputLabel value="CPF:" for="cpf"/>
+		    		<p:inputMask id="cpf" value="#{pesquisaLotacoesBean.filtro.cpf}" mask="999.999.999-99" size="12"/>
+		    		<p:outputLabel value="Nome:" for="nome"/>
+		    		<p:inputText id="nome" value="#{pesquisaLotacoesBean.filtro.nome}" size="28"/>
+		    		<p:outputLabel value="Especialidade:" for="especialidade"/>
+			        <p:selectOneMenu id="especialidade" value="#{pesquisaLotacoesBean.filtro.especialidade}" dynamic="true" filter="true" filterMatchMode="contains">
+			            <f:selectItem itemLabel="Selecione"/>
+			            <f:selectItems value="#{pesquisaLotacoesBean.listaEspecialidades}" var="especialidade" itemValue="#{especialidade}" itemLabel="#{especialidade.descricao}"/>
+			        </p:selectOneMenu>
+			        <p:outputLabel value="Tipo de vínculos:" for="tipoVinculo"/>
+			         <p:selectOneMenu id="tipoVinculo" value="#{pesquisaLotacoesBean.filtro.tipoVinculo}" filter="true" filterMatchMode="contains">
+			            <f:selectItem itemLabel="Selecione"/>
+			            <f:selectItems value="#{pesquisaLotacoesBean.tiposVinculo}" var="tipoVinculo" itemValue="#{tipoVinculo}" itemLabel="#{tipoVinculo.descricao}"/>
+			        </p:selectOneMenu>
+			        <p:outputLabel value="Estabelecimento:" for="estabelecimento"/>
+			         <p:selectOneMenu id="estabelecimento" value="#{pesquisaLotacoesBean.filtro.estabelecimento}" dynamic="true" filter="true" filterMatchMode="contains" disabled="#{!seguranca.atendentes}">
+			            <f:selectItem itemLabel="Selecione"/>
+			            <f:selectItems value="#{pesquisaLotacoesBean.listaEstabelecimentos}" var="estabelecimento" itemValue="#{estabelecimento}" itemLabel="#{estabelecimento.descricao}"/>
+			        </p:selectOneMenu>
+			        <p:outputLabel value="Carga horária:" for="cargaHoraria"/>
+		    		<p:selectOneMenu id="cargaHoraria" value="#{pesquisaLotacoesBean.filtro.cargaHoraria}" filter="true" filterMatchMode="contains">
+			            <f:selectItem itemLabel="Selecione"/>
+			            <f:selectItems value="#{pesquisaLotacoesBean.horarios}" var="cargaHoraria" itemValue="#{cargaHoraria}" itemLabel="#{cargaHoraria.descricao}"/>
+			        </p:selectOneMenu>
+			        <p:outputLabel value="Situação:" for="situacao"/>
+		    		<p:selectOneMenu id="situacao" value="#{pesquisaLotacoesBean.filtro.status}" filter="true" filterMatchMode="contains">
+			            <f:selectItem itemLabel="Selecione"/>
+			            <f:selectItems value="#{pesquisaLotacoesBean.statuses}" var="status" itemValue="#{status}" itemLabel="#{status.descricao}"/>
+			        </p:selectOneMenu>
+			        <p:outputLabel value="Período fim do contrato:"/>
+					<h:panelGroup>
+						<p:calendar pattern="dd/MM/yyyy" mask="true" value="#{pesquisaLotacoesBean.filtro.dataFimDe}" size="10" locale="pt"/>
+						<h:outputText value=" a " class="separador"/>
+						<p:calendar pattern="dd/MM/yyyy" mask="true" value="#{pesquisaLotacoesBean.filtro.dataFimAte}" mindate="#{pesquisaLotacoesBean.filtro.dataFimDe}" size="10" locale="pt"/>
+					</h:panelGroup>
+		        </p:panelGrid>
+		        <p:button value="Voltar" outcome="/home"/>
+	    		<p:commandButton value="Pesquisar" update="#{p:component('tabelaLotacoes')}"/>
+	    		<p:dataTable id="tabelaLotacoes" value="#{pesquisaLotacoesBean.model}" var="lotacao" lazy="true" rows="10" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rowsPerPageTemplate="10, 25, 50" emptyMessage="Nenhum registro encontrado.">
+	    			<p:column headerText="Matrícula" class="tabela-matricula" sortBy="#{lotacao.vinculo.matricula}">
+		    			<h:outputText value="#{lotacao.vinculo.matricula}" />
+		    		</p:column>
+		    		<p:column headerText="CPF" class="tabela-cpf" sortBy="#{vinculo.profissional.cpf}">
+		    			<h:outputText value="#{lotacao.vinculo.profissional.cpf}"/>
+		    		</p:column>
+	    			<p:column headerText="Nome" sortBy="#{vinculo.profissional.nome}">
+		    			<h:outputText value="#{lotacao.vinculo.profissional.nome}" />
+		    		</p:column>
+		    		<p:column headerText="Estabelecimento" sortBy="#{lotacao.estabelecimento.descricao}">
+		    			<h:outputText value="#{lotacao.estabelecimento.descricao}" />
+		    		</p:column>
+		    		<p:column headerText="Cargo" sortBy="#{vinculo.especialidade.descricao}">
+		    			<h:outputText value="#{lotacao.vinculo.especialidade.descricao} - #{lotacao.vinculo.cargaHoraria.descricao}"/>
+		    		</p:column>
+		    		<p:column headerText="Período de contrado" class="${fn:toLowerCase(lotacao.vinculo.vinculoFimProximo)}" sortBy="#{lotacao.vinculo.dataFim}">
+		    			<h:outputText value="De " />
+		    			<h:outputText value="#{lotacao.vinculo.dataInicio}">
+		    				<f:convertDateTime pattern="dd/MM/yyyy"/>
+		    			</h:outputText>
+		    			<h:outputText value=" até " />
+		    			<h:outputText value="#{lotacao.vinculo.dataFim}">
+		    				<f:convertDateTime pattern="dd/MM/yyyy"/>
+		    			</h:outputText>
+		    		</p:column>
+		    		<p:column headerText="Status" class="tabela-status ${fn:toLowerCase(lotacao.status)}" sortBy="#{lotacao.status}">
+		    			<h:outputText value="#{lotacao.status.descricao}" />
+		    		</p:column>
+		    		<f:facet name="footer">
+			    		#{pesquisaLotacoesBean.model.rowCount} registro(s) encontrado(s).
+				    </f:facet>
+		    	</p:dataTable>
+	    	</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

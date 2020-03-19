@@ -1,0 +1,56 @@
+<ui:composition template="/WEB-INF/template/layout.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <ui:define name="titulo">Vínculos - #{pesquisaVinculosBean.profissional.nome}</ui:define>
+    <ui:define name="corpo">
+    	<f:metadata>
+			<o:viewParam name="profissional" value="#{pesquisaVinculosBean.profissional}" />
+		</f:metadata>
+		<h:form>
+			<p:panel header="Vínculos - #{pesquisaVinculosBean.profissional.nome}" class="form-pesquisa">
+				<p:growl sticky="true"/>
+	    		<p:dataTable id="tabelaVinculos" value="#{pesquisaVinculosBean.profissional.vinculos}" var="vinculo" lazy="true" rows="10" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rowsPerPageTemplate="10, 25, 50" emptyMessage="Nenhum registro encontrado.">
+		    		<p:column headerText="Matrícula" class="tabela-matricula">
+		    			<h:outputText value="#{vinculo.matricula}" />
+		    		</p:column>
+		    		<p:column headerText="Cargo">
+		    			<h:outputText value="#{vinculo.especialidade.descricao}" />
+		    		</p:column>
+		    		<p:column headerText="Data início" class="tabela-data-hora">
+		    			<h:outputText value="#{vinculo.dataInicio}">
+		    				<f:convertDateTime pattern="dd/MM/yyyy"/>
+		    			</h:outputText>
+		    		</p:column>
+		    		<p:column headerText="Carga horária" class="tabela-carga-horaria">
+		    			<h:outputText value="#{vinculo.cargaHoraria.descricao}" />
+		    		</p:column>
+		    		<p:column headerText="Regime" class="tabela-tipo-vinculo">
+		    			<h:outputText value="#{vinculo.tipo.descricao}" />
+		    		</p:column>
+		    		<p:column headerText="Status" class="tabela-status ${fn:toLowerCase(vinculo.status)}">
+		    			<h:outputText value="#{vinculo.status.descricao}" />
+		    		</p:column>
+		    		<p:column headerText="Ações" class="tabela-acao-3">
+		    			<p:button icon="fa fa-hospital-o" outcome="/profissional/vinculo/lotacao/pesquisa" title="Adicionar lotação">
+		    				<f:param name="profissional" value="#{vinculo.profissional.id}" />
+		    				<f:param name="vinculo" value="#{vinculo.id}" />
+		    			</p:button>
+		    			<p:button icon="fa fa-pencil-square-o" outcome="/profissional/vinculo/cadastro" title="Editar">
+		    				<f:param name="profissional" value="#{vinculo.profissional.id}" />
+		    				<f:param name="vinculo" value="#{vinculo.id}" />
+		    			</p:button>
+		    			<p:commandButton icon="fa fa-trash" oncomplete="PF('confirmacaoExclusao').show()" process="@this" update="#{p:component('confirmacaoExclusaoDialog')}" title="Remover">
+		    				<f:setPropertyActionListener target="#{pesquisaVinculosBean.vinculo}" value="#{vinculo}" />
+		    			</p:commandButton>
+		    		</p:column>
+		    	</p:dataTable>
+		    	<p:confirmDialog id="confirmacaoExclusaoDialog" header="Exclusão de vínculo" message="Tem certeza que deseja excluir o vínculo #{pesquisaVinculosBean.vinculo.especialidade.descricao}?" widgetVar="confirmacaoExclusao">
+		    		<p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
+		    		<p:commandButton id="yesButton" value="Sim" oncomplete="PF('confirmacaoExclusao').hide();" action="#{pesquisaVinculosBean.excluir}" process="@this" update="#{p:component('tabelaVinculos')}" />
+		    	</p:confirmDialog>
+		    	<p:button value="Voltar" outcome="/profissional/pesquisa" />
+		    	<p:button value="Adicionar" outcome="/profissional/vinculo/cadastro">
+		    		<f:param name="profissional" value="#{pesquisaVinculosBean.profissional.id}" />
+		    	</p:button>
+	    	</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

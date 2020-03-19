@@ -1,0 +1,25 @@
+======================================================================================================
+Aumentar capacidade de transferencia de arquivos no MySQL
+
+Editar o arquivo C:\ProgramData\MySQL\MySQL Server 5.6\my.ini e alterar o valor max_allowed_packet=30M
+======================================================================================================
+https://www.iconsdb.com/
+
+use rh;
+insert into especialidade (id, descricao) values (1, 'Assistente Administrativo');
+insert into especialidade (id, descricao) values (2, 'Médico Clínico');
+insert into especialidade (id, descricao) values (3, 'Enfermeiro');
+insert into especialidade (id, descricao) values (4, 'Cirurgião Dentista');
+insert into estabelecimento (id, descricao) values (1, 'TI Saúde');
+insert into estabelecimento (id, descricao) values (2, 'RH Saúde');
+insert into estabelecimento (id, descricao) values (3, 'US Ponta da Fruta');
+insert into estabelecimento (id, descricao) values (4, 'US Araças');
+insert into grupo (id, descricao, nome) values (1, 'Administradores', 'ADMINISTRADORES');
+insert into grupo (id, descricao, nome) values (2, 'Atendentes', 'ATENDENTES');
+insert into grupo (id, descricao, nome) values (3, 'Solicitantes', 'SOLICITANTES');
+insert into grupo (id, descricao, nome) values (4, 'Funcionários', 'FUNCIONARIOS');
+insert into profissional (id, cpf, nome, senha, telefone, local_acesso_id, grupo_id, status) values (1, '110.169.877-22', 'ATILAS RODRIGUES LAMBERTI', '$2a$10$yGkCZDothV8GIhpLfamFJOcGzfDg3Vsrv81JNJ1cZzJmTUIzSfjUi', '(27) 997057718', 1, 1, 0);
+insert into profissional (id, cpf, nome, senha, telefone, local_acesso_id, grupo_id, status) values (2, '106.530.116-28', 'ALEX RODRIGUES LAMBERTI', '$2a$10$yGkCZDothV8GIhpLfamFJOcGzfDg3Vsrv81JNJ1cZzJmTUIzSfjUi', '(27) 997057718', 2, 2, 0);
+insert into profissional (id, cpf, nome, senha, telefone, local_acesso_id, grupo_id, status) values (3, '376.037.692-48', 'DAIANE RODRIGUES LAMBERTI', '$2a$10$yGkCZDothV8GIhpLfamFJOcGzfDg3Vsrv81JNJ1cZzJmTUIzSfjUi', '(27) 997057718', 3, 3, 0);
+insert into profissional (id, cpf, nome, senha, telefone, local_acesso_id, grupo_id, status) values (4, '419.376.956-97', 'ESTHER LUSABE LAMBERTI', '$2a$10$yGkCZDothV8GIhpLfamFJOcGzfDg3Vsrv81JNJ1cZzJmTUIzSfjUi', '(27) 997057718', 4, 3, 0);
+insert into profissional (id, cpf, nome, senha, telefone, local_acesso_id, grupo_id, status) values (5, '567.253.865-71', 'ELIDA SILVA LUBASE LAMBERTI', '$2a$10$yGkCZDothV8GIhpLfamFJOcGzfDg3Vsrv81JNJ1cZzJmTUIzSfjUi', '(27) 997057718', 4, 4, 0);
