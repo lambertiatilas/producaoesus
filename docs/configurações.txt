@@ -5,21 +5,149 @@ Editar o arquivo C:\ProgramData\MySQL\MySQL Server 5.6\my.ini e alterar o valor 
 ======================================================================================================
 https://www.iconsdb.com/
 
-use rh;
-insert into especialidade (id, descricao) values (1, 'Assistente Administrativo');
-insert into especialidade (id, descricao) values (2, 'Médico Clínico');
-insert into especialidade (id, descricao) values (3, 'Enfermeiro');
-insert into especialidade (id, descricao) values (4, 'Cirurgião Dentista');
-insert into estabelecimento (id, descricao) values (1, 'TI Saúde');
-insert into estabelecimento (id, descricao) values (2, 'RH Saúde');
-insert into estabelecimento (id, descricao) values (3, 'US Ponta da Fruta');
-insert into estabelecimento (id, descricao) values (4, 'US Araças');
-insert into grupo (id, descricao, nome) values (1, 'Administradores', 'ADMINISTRADORES');
-insert into grupo (id, descricao, nome) values (2, 'Atendentes', 'ATENDENTES');
-insert into grupo (id, descricao, nome) values (3, 'Solicitantes', 'SOLICITANTES');
-insert into grupo (id, descricao, nome) values (4, 'Funcionários', 'FUNCIONARIOS');
-insert into profissional (id, cpf, nome, senha, telefone, local_acesso_id, grupo_id, status) values (1, '110.169.877-22', 'ATILAS RODRIGUES LAMBERTI', '$2a$10$yGkCZDothV8GIhpLfamFJOcGzfDg3Vsrv81JNJ1cZzJmTUIzSfjUi', '(27) 997057718', 1, 1, 0);
-insert into profissional (id, cpf, nome, senha, telefone, local_acesso_id, grupo_id, status) values (2, '106.530.116-28', 'ALEX RODRIGUES LAMBERTI', '$2a$10$yGkCZDothV8GIhpLfamFJOcGzfDg3Vsrv81JNJ1cZzJmTUIzSfjUi', '(27) 997057718', 2, 2, 0);
-insert into profissional (id, cpf, nome, senha, telefone, local_acesso_id, grupo_id, status) values (3, '376.037.692-48', 'DAIANE RODRIGUES LAMBERTI', '$2a$10$yGkCZDothV8GIhpLfamFJOcGzfDg3Vsrv81JNJ1cZzJmTUIzSfjUi', '(27) 997057718', 3, 3, 0);
-insert into profissional (id, cpf, nome, senha, telefone, local_acesso_id, grupo_id, status) values (4, '419.376.956-97', 'ESTHER LUSABE LAMBERTI', '$2a$10$yGkCZDothV8GIhpLfamFJOcGzfDg3Vsrv81JNJ1cZzJmTUIzSfjUi', '(27) 997057718', 4, 3, 0);
-insert into profissional (id, cpf, nome, senha, telefone, local_acesso_id, grupo_id, status) values (5, '567.253.865-71', 'ELIDA SILVA LUBASE LAMBERTI', '$2a$10$yGkCZDothV8GIhpLfamFJOcGzfDg3Vsrv81JNJ1cZzJmTUIzSfjUi', '(27) 997057718', 4, 4, 0);
+/* Consulta do procedimento Administrativo */  
+
+select
+
+tb_atend_prof.co_seq_atend_prof,
+tb_uf.sg_uf,
+tb_unidade_saude.nu_cnes,
+tb_unidade_saude.no_unidade_saude,
+tb_prof.nu_cns,
+tb_cbo.co_cbo_2002,
+tb_cidadao.nu_cns,
+tb_cidadao.no_cidadao,
+tb_cidadao.dt_nascimento,
+tb_localidade.co_ibge,
+tb_sexo.sg_sexo,
+to_char(tb_atend_prof.dt_inicio, 'DD/MM/YYYY'),
+tb_proced.co_proced,
+tb_raca_cor.no_raca_cor
+
+from tb_atend_prof
+left join rl_atend_proced on tb_atend_prof.co_seq_atend_prof = rl_atend_proced.co_atend_prof
+
+inner join tb_lotacao on tb_atend_prof.co_lotacao = tb_lotacao.co_ator_papel
+inner join tb_prof on tb_lotacao.co_prof = tb_prof.co_ator_papel
+
+inner join tb_unidade_saude on tb_lotacao.co_unidade_saude = tb_unidade_saude.co_ator_papel
+inner join tb_uf on tb_unidade_saude.co_uf = tb_uf.co_uf
+
+inner join tb_cbo on tb_lotacao.co_cbo = tb_cbo.co_cbo
+
+inner join tb_atend on tb_atend_prof.co_atend = tb_atend.co_seq_atend
+inner join tb_prontuario on tb_atend.co_prontuario = tb_prontuario.co_seq_prontuario
+inner join tb_cidadao on tb_prontuario.co_cidadao = tb_cidadao.co_seq_cidadao
+
+inner join tb_localidade on tb_cidadao.co_localidade = tb_localidade.co_localidade
+
+inner join tb_sexo on tb_cidadao.co_sexo = tb_sexo.co_sexo
+
+inner join tb_proced on rl_atend_proced.co_proced = tb_proced.co_seq_proced
+
+inner join tb_raca_cor on tb_cidadao.co_raca_cor = tb_raca_cor.co_raca_cor
+
+where to_char(tb_atend_prof.dt_inicio, 'DD/MM/YYYY') = '17/03/2020'
+and tb_unidade_saude.no_unidade_saude like '%CEO%'
+and tb_atend_prof.dt_fim is not null
+and tb_atend_prof.co_seq_atend_prof = 48401
+
+union
+
+/* Consulta dos procedimentos Clínicos */  
+
+select
+
+tb_atend_prof.co_seq_atend_prof,
+tb_uf.sg_uf,
+tb_unidade_saude.nu_cnes,
+tb_unidade_saude.no_unidade_saude,
+tb_prof.nu_cns,
+tb_cbo.co_cbo_2002,
+tb_cidadao.nu_cns,
+tb_cidadao.no_cidadao,
+tb_cidadao.dt_nascimento,
+tb_localidade.co_ibge,
+tb_sexo.sg_sexo,
+to_char(tb_atend_prof.dt_inicio, 'DD/MM/YYYY'),
+tb_proced.co_proced,
+tb_raca_cor.no_raca_cor
+
+from tb_atend_prof
+left join rl_evolucao_plano_ciap on tb_atend_prof.co_seq_atend_prof = rl_evolucao_plano_ciap.co_atend_prof
+
+inner join tb_lotacao on tb_atend_prof.co_lotacao = tb_lotacao.co_ator_papel
+inner join tb_prof on tb_lotacao.co_prof = tb_prof.co_ator_papel
+
+inner join tb_unidade_saude on tb_lotacao.co_unidade_saude = tb_unidade_saude.co_ator_papel
+inner join tb_uf on tb_unidade_saude.co_uf = tb_uf.co_uf
+
+inner join tb_cbo on tb_lotacao.co_cbo = tb_cbo.co_cbo
+
+inner join tb_atend on tb_atend_prof.co_atend = tb_atend.co_seq_atend
+inner join tb_prontuario on tb_atend.co_prontuario = tb_prontuario.co_seq_prontuario
+inner join tb_cidadao on tb_prontuario.co_cidadao = tb_cidadao.co_seq_cidadao
+
+inner join tb_localidade on tb_cidadao.co_localidade = tb_localidade.co_localidade
+
+inner join tb_sexo on tb_cidadao.co_sexo = tb_sexo.co_sexo
+
+inner join tb_proced on rl_evolucao_plano_ciap.co_proced = tb_proced.co_seq_proced
+
+inner join tb_raca_cor on tb_cidadao.co_raca_cor = tb_raca_cor.co_raca_cor
+
+where to_char(tb_atend_prof.dt_inicio, 'DD/MM/YYYY') = '17/03/2020'
+and tb_unidade_saude.no_unidade_saude like '%CEO%'
+and tb_atend_prof.dt_fim is not null
+and tb_atend_prof.co_seq_atend_prof = 48401
+
+union
+
+/* Consulta dos procedimentos Odontológios */  
+
+select
+
+tb_atend_prof.co_seq_atend_prof,
+tb_uf.sg_uf,
+tb_unidade_saude.nu_cnes,
+tb_unidade_saude.no_unidade_saude,
+tb_prof.nu_cns,
+tb_cbo.co_cbo_2002,
+tb_cidadao.nu_cns,
+tb_cidadao.no_cidadao,
+tb_cidadao.dt_nascimento,
+tb_localidade.co_ibge,
+tb_sexo.sg_sexo,
+to_char(tb_atend_prof.dt_inicio, 'DD/MM/YYYY'),
+tb_proced.co_proced,
+tb_raca_cor.no_raca_cor
+
+from tb_atend_prof
+
+left join tb_evolucao_odonto on tb_atend_prof.co_seq_atend_prof = tb_evolucao_odonto.co_atend_prof_odonto
+inner join rl_evolucao_odonto_proced on tb_evolucao_odonto.co_seq_evolucao_odonto = rl_evolucao_odonto_proced.co_evolucao_odonto
+
+inner join tb_lotacao on tb_atend_prof.co_lotacao = tb_lotacao.co_ator_papel
+inner join tb_prof on tb_lotacao.co_prof = tb_prof.co_ator_papel
+
+inner join tb_unidade_saude on tb_lotacao.co_unidade_saude = tb_unidade_saude.co_ator_papel
+inner join tb_uf on tb_unidade_saude.co_uf = tb_uf.co_uf
+
+inner join tb_cbo on tb_lotacao.co_cbo = tb_cbo.co_cbo
+
+inner join tb_atend on tb_atend_prof.co_atend = tb_atend.co_seq_atend
+inner join tb_prontuario on tb_atend.co_prontuario = tb_prontuario.co_seq_prontuario
+inner join tb_cidadao on tb_prontuario.co_cidadao = tb_cidadao.co_seq_cidadao
+
+inner join tb_localidade on tb_cidadao.co_localidade = tb_localidade.co_localidade
+
+inner join tb_sexo on tb_cidadao.co_sexo = tb_sexo.co_sexo
+
+inner join tb_proced on rl_evolucao_odonto_proced.co_proced = tb_proced.co_seq_proced
+
+inner join tb_raca_cor on tb_cidadao.co_raca_cor = tb_raca_cor.co_raca_cor
+
+where to_char(tb_atend_prof.dt_inicio, 'DD/MM/YYYY') = '17/03/2020'
+and tb_unidade_saude.no_unidade_saude like '%CEO%'
+and tb_atend_prof.dt_fim is not null
+and tb_atend_prof.co_seq_atend_prof = 48401

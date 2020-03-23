@@ -3,7 +3,7 @@
 	<persistence-unit name="esusproducaoPU">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://172.23.248.26/esus" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://172.23.248.26:5433/esus" />
 			<property name="javax.persistence.jdbc.user" value="postgres" />
 			<property name="javax.persistence.jdbc.password" value="esus" />
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />

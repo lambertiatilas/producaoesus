@@ -4,13 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_proced ")
+@Table(name = "tb_proced")
 public class Procedimento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -19,7 +17,6 @@ public class Procedimento implements Serializable {
 	private String codigo;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "co_seq_proced")
 	public Long getId() {
 		return id;

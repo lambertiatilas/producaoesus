@@ -3,8 +3,6 @@ package pmvv.semsa.esus.producaoesus.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +18,6 @@ public class Prontuario implements Serializable {
 	private Paciente paciente;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JoinColumn(name = "co_seq_prontuario")
 	public Long getId() {
 		return id;

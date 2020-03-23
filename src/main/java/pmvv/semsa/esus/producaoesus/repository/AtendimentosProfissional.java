@@ -1,14 +1,12 @@
 package pmvv.semsa.esus.producaoesus.repository;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import pmvv.semsa.esus.producaoesus.model.AtendimentoProfissional;
-import pmvv.semsa.esus.producaoesus.model.Estabelecimento;
 
 public class AtendimentosProfissional implements Serializable {
 
@@ -17,9 +15,15 @@ public class AtendimentosProfissional implements Serializable {
 	@Inject
 	private EntityManager manager;
 	
-	public List<AtendimentoProfissional> procedimentosAdministrativos(Date dataInicio, Estabelecimento estabelecimento) {
-		return manager.createQuery("select atendimentoProfissional from AtendimentoProfissional atendimentoProfissional"
-				+ " inner join ProcedimentoAdministrativo.atendimentoProfissional procedimentoAdministrativo"
+	public List<AtendimentoProfissional> procedimentosAdministrativos() {
+		return manager.createQuery("from AtendimentoProfissional atendimentoProfissional"
+			, AtendimentoProfissional.class)
+			.getResultList();
+	}
+	
+	/*public List<AtendimentoProfissional> procedimentosAdministrativos(Date dataInicio, Estabelecimento estabelecimento) {
+		return manager.createQuery("select atendimentoProfissional from ProcedimentoAdministrativo procedimentoAdministrativo"
+				+ " inner join procedimentoAdministrativo.atendimentoProfissional atendimentoProfissional"
 				+ " inner join atendimentoProfissional.lotacao lotacao"
 				+ " inner join lotacao.profissional profissional"
 				+ " inner join lotacao.estabelecimento estabelecimento"
@@ -38,5 +42,5 @@ public class AtendimentosProfissional implements Serializable {
 			.setParameter("dataInicio", dataInicio)
 			.setParameter("estabelecimento", estabelecimento)
 			.getResultList();
-	}
+	}*/
 }

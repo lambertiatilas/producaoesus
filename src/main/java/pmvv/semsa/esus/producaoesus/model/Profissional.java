@@ -3,8 +3,6 @@ package pmvv.semsa.esus.producaoesus.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
@@ -19,7 +17,6 @@ public class Profissional implements Serializable {
 	private String cns;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JoinColumn(name = "co_ator_papel")
 	public Long getId() {
 		return id;

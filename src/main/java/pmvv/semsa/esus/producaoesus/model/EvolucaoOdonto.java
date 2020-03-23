@@ -1,13 +1,16 @@
 package pmvv.semsa.esus.producaoesus.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -19,9 +22,9 @@ public class EvolucaoOdonto implements Serializable {
 	
 	private Long id;
 	private AtendimentoProfissional AtendimentoProfissional;
+	private List<Procedimento> procedimentos = new ArrayList<>();
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "co_seq_evolucao_odonto")
 	public Long getId() {
 		return id;
@@ -39,6 +42,16 @@ public class EvolucaoOdonto implements Serializable {
 
 	public void setAtendimentoProfissional(AtendimentoProfissional atendimentoProfissional) {
 		AtendimentoProfissional = atendimentoProfissional;
+	}
+	
+	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+	@JoinTable(name = "rl_evolucao_odonto_proced", joinColumns = @JoinColumn(name = "tb_evolucao_odonto"), inverseJoinColumns = @JoinColumn(name = "co_proced"))
+	public List<Procedimento> getProcedimentos() {
+		return procedimentos;
+	}
+
+	public void setProcedimentos(List<Procedimento> procedimentos) {
+		this.procedimentos = procedimentos;
 	}
 
 	@Override

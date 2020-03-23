@@ -3,8 +3,6 @@ package pmvv.semsa.esus.producaoesus.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,9 +16,9 @@ public class ProcedimentoClinico implements Serializable {
 	
 	private Long id;
 	private AtendimentoProfissional atendimentoProfissional;
+	private Procedimento procedimento;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JoinColumn(name = "co_seq_evolucao_plano_ciap")
 	public Long getId() {
 		return id;
@@ -38,6 +36,16 @@ public class ProcedimentoClinico implements Serializable {
 
 	public void setAtendimentoProfissional(AtendimentoProfissional atendimentoProfissional) {
 		this.atendimentoProfissional = atendimentoProfissional;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "co_proced")
+	public Procedimento getProcedimento() {
+		return procedimento;
+	}
+
+	public void setProcedimento(Procedimento procedimento) {
+		this.procedimento = procedimento;
 	}
 
 	@Override

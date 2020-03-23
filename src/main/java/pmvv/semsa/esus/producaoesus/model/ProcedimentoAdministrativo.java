@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,11 +16,10 @@ public class ProcedimentoAdministrativo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
-	private Procedimento procedimento;
 	private AtendimentoProfissional atendimentoProfissional;
+	private Procedimento procedimento;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "co_seq_atend_proced")
 	public Long getId() {
 		return id;
@@ -30,6 +27,16 @@ public class ProcedimentoAdministrativo implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "co_atend_prof")
+	public AtendimentoProfissional getAtendimentoProfissional() {
+		return atendimentoProfissional;
+	}
+
+	public void setAtendimentoProfissional(AtendimentoProfissional atendimentoProfissional) {
+		this.atendimentoProfissional = atendimentoProfissional;
 	}
 
 	@ManyToOne
@@ -40,16 +47,6 @@ public class ProcedimentoAdministrativo implements Serializable {
 
 	public void setProcedimento(Procedimento procedimento) {
 		this.procedimento = procedimento;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "co_atend_prof")
-	public AtendimentoProfissional getAtendimentoProfissional() {
-		return atendimentoProfissional;
-	}
-
-	public void setAtendimentoProfissional(AtendimentoProfissional atendimentoProfissional) {
-		this.atendimentoProfissional = atendimentoProfissional;
 	}
 
 	@Override
