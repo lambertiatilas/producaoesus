@@ -8,9 +8,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import pmvv.semsa.esus.producaoesus.model.AtendimentoProfissional;
 import pmvv.semsa.esus.producaoesus.model.Estabelecimento;
-import pmvv.semsa.esus.producaoesus.repository.AtendimentosProfissional;
+import pmvv.semsa.esus.producaoesus.model.ProcedimentoAdministrativo;
+import pmvv.semsa.esus.producaoesus.repository.Procedimentos;
 import pmvv.semsa.esus.producaoesus.repository.Estabelecimentos;
 import pmvv.semsa.esus.producaoesus.repository.filter.AtendimentoProfissionalFilter;
 
@@ -24,12 +24,12 @@ public class PesquisaAtendimentosProfissionalBean implements Serializable {
 	private Estabelecimentos estabelecimentos;
 	private List<Estabelecimento> listaEstabelecimentos = new ArrayList<>();
 	@Inject
-	private AtendimentosProfissional atendimentosProfissional;
+	private Procedimentos procedimentos;
 	private AtendimentoProfissionalFilter filtro;
-	private List<AtendimentoProfissional> atendimentosProfissionalFiltrados;
-	
-	public List<AtendimentoProfissional> getAtendimentosProfissionalFiltrados() {
-		return atendimentosProfissionalFiltrados;
+	private List<ProcedimentoAdministrativo> procedimentosAdministrativosFiltrados;
+
+	public List<ProcedimentoAdministrativo> getProcedimentosAdministrativosFiltrados() {
+		return procedimentosAdministrativosFiltrados;
 	}
 
 	public AtendimentoProfissionalFilter getFiltro() {
@@ -46,6 +46,6 @@ public class PesquisaAtendimentosProfissionalBean implements Serializable {
 	}
 	
 	public void pesquisar() {
-		atendimentosProfissionalFiltrados = atendimentosProfissional.procedimentosAdministrativos();
+		procedimentosAdministrativosFiltrados = procedimentos.procedimentosAdministrativos(filtro.getVigencia(), filtro.getEstabelecimento());
 	}
 }

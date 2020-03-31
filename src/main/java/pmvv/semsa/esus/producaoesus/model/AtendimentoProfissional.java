@@ -21,6 +21,7 @@ public class AtendimentoProfissional implements Serializable {
 	
 	private Long id;
 	private Date dataInicio;
+	private Date dataFim;
 	private Atendimento atendimento;
 	private Lotacao lotacao;
 
@@ -42,6 +43,16 @@ public class AtendimentoProfissional implements Serializable {
 
 	public void setDataInicio(Date dataInicio) {
 		this.dataInicio = dataInicio;
+	}
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "dt_fim")
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
 	}
 
 	@OneToOne

@@ -20,9 +20,49 @@
 	    			<p:commandButton value="Pesquisar" action="#{pesquisaAtendimentosProfissionalBean.pesquisar}" update="@form" />
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
-	    	<p:dataTable id="produtosTable" value="#{pesquisaAtendimentosProfissionalBean.atendimentosProfissionalFiltrados}" var="atendimentoProfissional" emptyMessage="Nenhum produto encontrado." rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
-	    		<p:column headerText="ID">
-	    			<h:outputText value="#{atendimentoProfissional.id}" />
+	    	<p:dataTable id="produtosTable" value="#{pesquisaAtendimentosProfissionalBean.procedimentosAdministrativosFiltrados}" var="procedimentoAdministrativo" emptyMessage="Nenhum procedimento encontrado." rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+	    		<p:column headerText="UF">
+	    			<h:outputText value="#{procedimentoAdministrativo.atendimentoProfissional.lotacao.estabelecimento.estado.sigla}" />
+	    		</p:column>
+	    		<p:column headerText="CNES">
+	    			<h:outputText value="#{procedimentoAdministrativo.atendimentoProfissional.lotacao.estabelecimento.cnes}" />
+	    		</p:column>
+	    		<p:column headerText="Unidade de saúde">
+	    			<h:outputText value="#{procedimentoAdministrativo.atendimentoProfissional.lotacao.estabelecimento.nome}" />
+	    		</p:column>
+	    		<p:column headerText="Profissional CNS">
+	    			<h:outputText value="#{procedimentoAdministrativo.atendimentoProfissional.lotacao.profissional.cns}" />
+	    		</p:column>
+	    		<p:column headerText="CBO">
+	    			<h:outputText value="#{procedimentoAdministrativo.atendimentoProfissional.lotacao.especialidade.codigo}" />
+	    		</p:column>
+	    		<p:column headerText="Paciente CNS">
+	    			<h:outputText value="#{procedimentoAdministrativo.atendimentoProfissional.atendimento.prontuario.paciente.cns}" />
+	    		</p:column>
+	    		<p:column headerText="Nome paciente">
+	    			<h:outputText value="#{procedimentoAdministrativo.atendimentoProfissional.atendimento.prontuario.paciente.nome}" />
+	    		</p:column>
+	    		<p:column headerText="Paciente DN">
+	    			<h:outputText value="#{atendimentoProfissional.atendimento.prontuario.paciente.dataNascimento}">
+	    				<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    			</h:outputText>
+	    		</p:column>
+	    		<p:column headerText="Paciente localidade">
+	    			<h:outputText value="#{procedimentoAdministrativo.atendimentoProfissional.atendimento.prontuario.paciente.municipio.codigoIbge}" />
+	    		</p:column>
+	    		<p:column headerText="Paciente sexo">
+	    			<h:outputText value="#{procedimentoAdministrativo.atendimentoProfissional.atendimento.prontuario.paciente.sexo.sigla}" />
+	    		</p:column>
+	    		<p:column headerText="Data início">
+	    			<h:outputText value="#{procedimentoAdministrativo.atendimentoProfissional.dataInicio}">
+	    				<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    			</h:outputText>
+	    		</p:column>
+	    		<p:column headerText="Procedimento">
+	    			<h:outputText value="#{procedimentoAdministrativo.procedimento.codigo}" />
+	    		</p:column>
+	    		<p:column headerText="Paciente raça/cor">
+	    			<h:outputText value="#{procedimentoAdministrativo.atendimentoProfissional.atendimento.prontuario.paciente.racaCor.descricao}" />
 	    		</p:column>
 	    	</p:dataTable>
 		</h:form>

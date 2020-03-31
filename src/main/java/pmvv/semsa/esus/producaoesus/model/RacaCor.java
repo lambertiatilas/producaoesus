@@ -2,13 +2,13 @@ package pmvv.semsa.esus.producaoesus.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "raca_cor")
+@Table(name = "tb_raca_cor")
 public class RacaCor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -17,7 +17,7 @@ public class RacaCor implements Serializable {
 	private String descricao;
 
 	@Id
-	@JoinColumn(name = "co_raca_cor")
+	@Column(name = "co_raca_cor")
 	public Long getId() {
 		return id;
 	}
@@ -26,7 +26,7 @@ public class RacaCor implements Serializable {
 		this.id = id;
 	}
 
-	@JoinColumn(name = "no_raca_cor")
+	@Column(name = "no_raca_cor")
 	public String getDescricao() {
 		return descricao;
 	}

@@ -2,6 +2,7 @@ package pmvv.semsa.esus.producaoesus.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -18,7 +19,7 @@ public class Prontuario implements Serializable {
 	private Paciente paciente;
 
 	@Id
-	@JoinColumn(name = "co_seq_prontuario")
+	@Column(name = "co_seq_prontuario")
 	public Long getId() {
 		return id;
 	}

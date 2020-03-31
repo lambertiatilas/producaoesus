@@ -21,6 +21,7 @@ public class Paciente implements Serializable {
 	private String nome;
 	private Date dataNascimento;
 	private RacaCor racaCor;
+	private Sexo sexo;
 	private Municipio municipio;
 
 	@Id
@@ -68,6 +69,16 @@ public class Paciente implements Serializable {
 
 	public void setRacaCor(RacaCor racaCor) {
 		this.racaCor = racaCor;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "co_sexo")
+	public Sexo getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(Sexo sexo) {
+		this.sexo = sexo;
 	}
 
 	@ManyToOne
